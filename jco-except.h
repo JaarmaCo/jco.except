@@ -324,7 +324,7 @@ void jco_throw(jco_exception_context_t ctx, int code, const char *fmt, ...) {
 
     va_list va;
     if (code == 0) {
-        va_start(va);
+        va_start(va, fmt);
         vfprintf(stderr, fmt, va);
         va_end(va);
         exit(0);
