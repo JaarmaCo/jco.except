@@ -1,3 +1,97 @@
+///
+/// Copyright © 2026 William Jaarma (JaarmaCo@git)
+/// Permission is hereby granted, free of charge, to any person obtaining a copy of this 
+/// software and associated documentation files (the “Software”), to deal in the Software 
+/// without restriction, including without limitation the rights to use, copy, modify, merge, 
+/// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons 
+/// to whom the Software is furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in all copies or 
+/// substantial portions of the Software.
+/// 
+/// THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
+/// BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+/// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+/// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+///
+///
+///  ██████╗███████╗██╗  ██╗ ██████╗███████╗██████╗ ████████╗
+/// ██╔════╝██╔════╝╚██╗██╔╝██╔════╝██╔════╝██╔══██╗╚══██╔══╝
+/// ██║     █████╗   ╚███╔╝ ██║     █████╗  ██████╔╝   ██║   
+/// ██║     ██╔══╝   ██╔██╗ ██║     ██╔══╝  ██╔═══╝    ██║   
+/// ╚██████╗███████╗██╔╝ ██╗╚██████╗███████╗██║        ██║   
+///  ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝╚══════╝╚═╝        ╚═╝                                                        
+///
+///
+///
+/// cexcept is my personal attempt at an STB-style error handling system to be used in gcc/clang C.
+/// It contains the following features:
+///
+/// - Hierarchical control flow implemented using setjmp/longjmp
+/// - Error codes and stack allocated exception messages
+/// - Attachable cleanup actions
+///
+/// To access this library, #include it and in a source file, define the CEXCEPT_IMPLEMENTATION macro
+/// before including this file:
+///
+///     [cexcept.c]:
+///                    #define CEXCEPT_IMPLEMENTATION
+///                    #include "cexcept.h"
+///
+/// The main purpose of this single header library is to simplify programming in C by supplying a 
+/// minimalistic runtime system for exception handling. The system is designed to minimize the amount 
+/// of memory allocated on the heap, and instead opts for stack allocated structures to store state.
+///
+/// This has been achieved using va_list-like schemantics in that context types are declared as single 
+/// element arrays, effectively disabling rvalue schemantics for those types. For instance, to enable 
+/// exception handling for a function handle_request(), one would write something like this:
+///
+///     #include "database.h"
+///     #include "json.h"
+///
+///     #define CEXCEPT_IMPLEMENTATION
+///     #include "cexcept.h"
+///
+///     void handle_request(c_except_t upstream_except, 
+///                         http_request_t *request, 
+///                         http_response_t *response) {
+///         c_cleanup_pool(1);
+///         c_except_t except;
+///         if (c_try(upstream_except, except)) {
+///             goto internal_server_error;
+///         }
+///
+///         json_t json;
+///         parse_request(request, &json);
+///         defer_except(except, json_free, &json);
+///
+///         char *email;
+///         query_database(&email, "SELECT user_email FROM users WHERE user_name=?", 
+///             json_obj_string(&json, "name"));
+///
+///         strcpy(response->body, email);
+///         response->status_code = 200;
+///         c_cleanup_except(except);
+///         return;
+///     internal_server_error:
+///         response->status_code = 500;
+///         strncpy(response->body, except.message, except.message_length);
+///     }
+///
+/// except                         - Acts as the exception context of the handle_request() function.
+/// 
+/// c_cleanup_pool(1)              - Allocates a buffer on the stack that can hold 1 cleanup action.
+///
+/// c_try(upstream_except, except) - Binds the exception context of this scope to the context 
+///                                  of the parent scope and returns a second time if an exception 
+///                                  is thrown.
+///
+/// defer_except(except,           - Ensures json_free is called if an exception is thrown.
+///     json_free, &json)
+///
+/// c_cleanup_except(except)       - Manually invokes the cleanup actions (json_free) attached to except.
+///
 #ifndef CEXCEPT_H_
 #define CEXCEPT_H_
 
@@ -256,6 +350,7 @@ _Noreturn
 void c_rethrow(c_exception_context_t ctx) {
     if (ctx->upstream && ctx->exception_code) {
         c_cleanup(ctx->upstream->cleanup);
+        strncpy(ctx->upstream->message, ctx->message, ctx->message_length);
         longjmp(ctx->upstream->jmp_location, ctx->exception_code);
     }
     fprintf(stderr, "%.*s", (int)ctx->message_length, ctx->message);
