@@ -42,7 +42,7 @@
 ///         exit(1);
 ///     }
 ///
-///     int *array = jco_alloc(arena, int, 256);
+///     int *array = jco_alloc(arena->allocator, int, 256);
 ///     for (size_t i = 0; i < 256; ++i) {
 ///         array[i] = i;
 ///     }
@@ -250,19 +250,19 @@ void jco_alloc_destroy(jco_allocator_t alloc);
 /// Deallocates an array (pointer[count]) of type T.
 ///
 #define jco_free(alloc, T, pointer, count) \
-    (void)jco_alloc_invoke_((alloc)->allocator, (pointer), sizeof(T),\
+    (void)jco_alloc_invoke_((alloc), (pointer), sizeof(T),\
             _Alignof(T), (count), 0)
 
 #define jco_alloc_2(alloc, T) \
-    (T *)jco_alloc_invoke_((alloc)->allocator, NULL, \
+    (T *)jco_alloc_invoke_((alloc), NULL, \
             sizeof(T), _Alignof(T), 0, 1)
 
 #define jco_alloc_3(alloc, T, count) \
-    (T *)jco_alloc_invoke_((alloc)->allocator, NULL, sizeof(T), \
+    (T *)jco_alloc_invoke_((alloc), NULL, sizeof(T), \
             _Alignof(T), 0, (count))
 
 #define jco_alloc_5(alloc, T, pointer, old_count, new_count)\
-    (T *)jco_alloc_invoke_((alloc)->allocator, (pointer), sizeof(T), \
+    (T *)jco_alloc_invoke_((alloc), (pointer), sizeof(T), \
             _Alignof(T), (old_count), (new_count))
 
 #ifdef __cplusplus
