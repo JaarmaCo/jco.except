@@ -15,7 +15,6 @@
 /// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///
-/// 
 ///      ██╗ ██████╗ ██████╗     █████╗ ██████╗ ██████╗  █████╗ ██╗   ██╗
 ///      ██║██╔════╝██╔═══██╗   ██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝
 ///      ██║██║     ██║   ██║   ███████║██████╔╝██████╔╝███████║ ╚████╔╝ 
@@ -47,7 +46,7 @@
 /// To use this library for your own types, define a struct (for an element 
 /// type T) containing the following fields:
 ///
-/// - jco_allocator_t allocator
+/// - struct jco_allocator *allocator
 /// - T *items
 /// - size_t count
 /// - size_t capacity
@@ -65,182 +64,182 @@
 #include "jco-alloc.h"
 
 typedef struct jco_cstr_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     char **items;
     size_t count;
     size_t capacity;
 } jco_cstr_array_t;
 
 typedef struct jco_ptr_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     void **items;
     size_t count;
     size_t capacity;
 } jco_ptr_array_t;
 
 typedef struct jco_char_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     char *items;
     size_t count;
     size_t capacity;
 } jco_char_array_t;
 
 typedef struct jco_int8_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     int8_t *items;
     size_t count;
     size_t capacity;
 } jco_int8_array_t;
 
 typedef struct jco_int16_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     int16_t *items;
     size_t count;
     size_t capacity;
 } jco_int16_array_t;
 
 typedef struct jco_int32_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     int32_t *items;
     size_t count;
     size_t capacity;
 } jco_int32_array_t;
 
 typedef struct jco_int64_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     int64_t *items;
     size_t count;
     size_t capacity;
 } jco_int64_array_t;
 
 typedef struct jco_uint8_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     uint8_t *items;
     size_t count;
     size_t capacity;
 } jco_uint8_array_t;
 
 typedef struct jco_uint16_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     uint16_t *items;
     size_t count;
     size_t capacity;
 } jco_uint16_array_t;
 
 typedef struct jco_uint32_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     uint32_t *items;
     size_t count;
     size_t capacity;
 } jco_uint32_array_t;
 
 typedef struct jco_uint64_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     uint64_t *items;
     size_t count;
     size_t capacity;
 } jco_uint64_array_t;
 
 typedef struct jco_ptrdiff_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     ptrdiff_t *items;
     size_t count;
     size_t capacity;
 } jco_ptrdiff_array_t;
 
 typedef struct jco_size_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     size_t *items;
     size_t count;
     size_t capacity;
 } jco_size_array_t;
 
 typedef struct jco_intptr_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     intptr_t *items;
     size_t count;
     size_t capacity;
 } jco_intptr_array_t;
 
 typedef struct jco_uintptr_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     uintptr_t *items;
     size_t count;
     size_t capacity;
 } jco_uintptr_array_t;
 
 typedef struct jco_schar_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     signed char *items;
     size_t count;
     size_t capacity;
 } jco_schar_array_t;
 
 typedef struct jco_short_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     short *items;
     size_t count;
     size_t capacity;
 } jco_short_array_t;
 
 typedef struct jco_int_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     int *items;
     size_t count;
     size_t capacity;
 } jco_int_array_t;
 
 typedef struct jco_long_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     long *items;
     size_t count;
     size_t capacity;
 } jco_long_array_t;
 
 typedef struct jco_uchar_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     unsigned char *items;
     size_t count;
     size_t capacity;
 } jco_uchar_array_t;
 
 typedef struct jco_ushort_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     unsigned short *items;
     size_t count;
     size_t capacity;
 } jco_ushort_array_t;
 
 typedef struct jco_uint_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     unsigned int *items;
     size_t count;
     size_t capacity;
 } jco_uint_array_t;
 
 typedef struct jco_ulong_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     unsigned long *items;
     size_t count;
     size_t capacity;
 } jco_ulong_array_t;
 
 typedef struct jco_float_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     float *items;
     size_t count;
     size_t capacity;
 } jco_float_array_t;
 
 typedef struct jco_double_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     double *items;
     size_t count;
     size_t capacity;
 } jco_double_array_t;
 
 typedef struct jco_ldouble_array {
-    jco_allocator_t allocator;
+    struct jco_allocator *allocator;
     long double *items;
     size_t count;
     size_t capacity;
@@ -261,9 +260,9 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_append_1(array)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        jco_array_reserve(*array_ptr, array_ptr->count + 1);\
-        ++array_ptr->count;\
+        typeof(&(array)) array_ptr_A1_ = &(array);\
+        jco_array_reserve(*array_ptr_A1_, array_ptr_A1_->count + 1);\
+        ++array_ptr_A1_->count;\
     } while (0)
 
 /// Append a value at the end of the array.
@@ -273,9 +272,9 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_append_2(array, value)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        jco_array_reserve(*array_ptr, array_ptr->count + 1);\
-        array_ptr->items[array_ptr->count++] = (value);\
+        typeof(&(array)) array_ptr_A2_ = &(array);\
+        jco_array_reserve(*array_ptr_A2_, array_ptr_A2_->count + 1);\
+        array_ptr_A2_->items[array_ptr_A2_->count++] = (value);\
     } while (0)
 
 /// Append a number of values at the end of the array.
@@ -286,16 +285,17 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_append_3(array, values, nvalues)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        size_t count_ = (nvalues);\
-        typeof(array_ptr->items) values_ = (values);\
-        jco_array_reserve(*array_ptr, array_ptr->count + count_);\
-        if (NULL != values_) {\
+        typeof(&(array)) array_ptr_A3_ = &(array);\
+        size_t count_A3_ = (nvalues);\
+        typeof(array_ptr_A3_->items) values_A3_ = (values);\
+        jco_array_reserve(*array_ptr_A3_, array_ptr_A3_->count + count_A3_);\
+        if (NULL != values_A3_) {\
             memcpy(\
-                array_ptr->items, \
-                values_, \
-                count_ * sizeof *values_);\
+                array_ptr_A3_->items + array_ptr_A3_->count, \
+                values_A3_, \
+                count_A3_ * sizeof *values_A3_);\
         }\
+        array_ptr_A3_->count += count_A3_;\
     } while (0)
 
 /// Extend or shrink the size of an array.
@@ -305,10 +305,10 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_resize(array, n)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        size_t count_ = (n);\
-        jco_array_reserve(*array_ptr, count_);\
-        array_ptr->count = count_;\
+        typeof(&(array)) array_ptr_R_ = &(array);\
+        size_t count_R_ = (n);\
+        jco_array_reserve(*array_ptr_R_, count_R_);\
+        array_ptr_R_->count = count_R_;\
     } while (0)
 
 /// Preallocate space in an array.
@@ -318,19 +318,19 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_reserve(array, n)\
     do {\
-        size_t required = (n);\
-        if (required <= (array).capacity) {\
+        size_t required_RR_ = (n);\
+        typeof(&(array)) array_ptr_RR_ = &(array);\
+        if (required_RR_ <= array_ptr_RR_->capacity) {\
             break;\
         }\
-        size_t new_capacity = required + required / 2;\
-        typeof(&(array)) array_ptr = &(array);\
-        array_ptr->items = jco_alloc(\
-                array_ptr->allocator, \
-                typeof(*array_ptr->items),\
-                array_ptr->items, \
-                array_ptr->capacity, \
-                new_capacity);\
-        array_ptr->capacity = new_capacity;\
+        size_t new_capacity_RR_ = required_RR_ + required_RR_ / 2;\
+        array_ptr_RR_->items = jco_alloc(\
+                array_ptr_RR_->allocator, \
+                typeof(*array_ptr_RR_->items),\
+                array_ptr_RR_->items, \
+                array_ptr_RR_->capacity, \
+                new_capacity_RR_);\
+        array_ptr_RR_->capacity = new_capacity_RR_;\
     } while(0)
 
 /// Behavior depends on the number of arguments called.
@@ -350,14 +350,14 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_insert_3(array, index, value)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        size_t start = (index);\
-        assert(start <= array_ptr->count);\
-        jco_array_append(*array_ptr);\
-        memmove(array_ptr->items + start + 1,\
-                array_ptr->items + start,\
-                (array_ptr->count - start) * sizeof *array_ptr->items);\
-        array_ptr->items[start] = (value);\
+        typeof(&(array)) array_ptr_I3_ = &(array);\
+        size_t start_I3_ = (index);\
+        assert(start_I3_ <= array_ptr_I3_->count);\
+        jco_array_append(*array_ptr_I3_);\
+        memmove(array_ptr_I3_->items + start_I3_ + 1,\
+                array_ptr_I3_->items + start_I3_,\
+                (array_ptr_I3_->count - start_I3_) * sizeof *array_ptr_I3_->items);\
+        array_ptr_I3_->items[start_I3_] = (value);\
     } while (0)
 
 /// Stable insert a number of elements into the array.
@@ -369,17 +369,17 @@ typedef struct jco_ldouble_array {
 ///
 #define jco_array_insert_4(array, index, values, nvalues)\
     do {\
-        typeof(&(array)) array_ptr = &(array);\
-        size_t start = (index);\
-        size_t count_ = (nvalues);\
-        typeof(array_ptr->items) values_ = (values);\
-        assert(start <= array_ptr->count);\
-        jco_array_append(*array_ptr, NULL, count_);\
-        memmove(array_ptr->items + start + count_,\
-                array_ptr->items + start,\
-                (array_ptr->count - start) * sizeof *array_ptr->items);\
-        if (NULL != values_) {\
-            memcpy(array_ptr->items, values_, count_ * sizeof(*values_));\
+        typeof(&(array)) array_ptr_I4_ = &(array);\
+        size_t start_I4_ = (index);\
+        size_t count_I4_ = (nvalues);\
+        typeof(array_ptr_I4_->items) values_I4_ = (values);\
+        assert(start_I4_ <= array_ptr_I4_->count);\
+        jco_array_append(*array_ptr_I4_, NULL, count_I4_);\
+        memmove(array_ptr_I4_->items + start_I4_ + count_I4_,\
+                array_ptr_I4_->items + start_I4_,\
+                (array_ptr_I4_->count - start_I4_) * sizeof *array_ptr_I4_->items);\
+        if (NULL != values_I4_) {\
+            memcpy(array_ptr_I4_->items, values_I4_, count_I4_ * sizeof(*values_I4_));\
         }\
     } while (0)
 
@@ -467,6 +467,33 @@ typedef struct jco_ldouble_array {
 #define array_insert(...)  jco_array_insert(__VA_ARGS__)
 #define array_erase(...)   jco_array_erase(__VA_ARGS__)
 #define array_pop(...)     jco_array_pop(__VA_ARGS__)
+
+typedef struct jco_cstr_array    cstr_array_t;
+typedef struct jco_ptr_array     ptr_array_t;
+typedef struct jco_char_array    char_array_t;
+typedef struct jco_int8_array    int8_array_t;
+typedef struct jco_int16_array   int16_array_t;
+typedef struct jco_int32_array   int32_array_t;
+typedef struct jco_int64_array   int64_array_t;
+typedef struct jco_uint8_array   uint8_array_t;
+typedef struct jco_uint16_array  uint16_array_t;
+typedef struct jco_uint32_array  uint32_array_t;
+typedef struct jco_uint64_array  uint64_array_t;
+typedef struct jco_ptrdiff_array ptrdiff_array_t;
+typedef struct jco_size_array    size_array_t;
+typedef struct jco_intptr_array  intptr_array_t;
+typedef struct jco_uintptr_array uintptr_array_t;
+typedef struct jco_schar_array   schar_array_t;
+typedef struct jco_short_array   short_array_t;
+typedef struct jco_int_array     int_array_t;
+typedef struct jco_long_array    long_array_t;
+typedef struct jco_uchar_array   uchar_array_t;
+typedef struct jco_ushort_array  ushort_array_t;
+typedef struct jco_uint_array    uint_array_t;
+typedef struct jco_ulong_array   ulong_array_t;
+typedef struct jco_double_array  double_array_t;
+typedef struct jco_ldouble_array ldouble_array_t;
+
 #endif
 
 #define JCOARRAY_H_
