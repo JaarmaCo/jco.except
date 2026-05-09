@@ -379,7 +379,8 @@ typedef struct jco_ldouble_array {
                 array_ptr_I4_->items + start_I4_,\
                 (array_ptr_I4_->count - start_I4_) * sizeof *array_ptr_I4_->items);\
         if (NULL != values_I4_) {\
-            memcpy(array_ptr_I4_->items, values_I4_, count_I4_ * sizeof(*values_I4_));\
+            memcpy(array_ptr_I4_->items + start_I4_, \
+                    values_I4_, count_I4_ * sizeof(*values_I4_));\
         }\
     } while (0)
 
